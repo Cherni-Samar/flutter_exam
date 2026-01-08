@@ -74,13 +74,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
       );
     }
 
-    // Check for maintenance notification (every 10,000 KM)
-    if (_vehicle!.mileage % Thresholds.maintenanceMileageInterval == 0 &&
-        _vehicle!.mileage > 0) {
+    // Check for maintenance notification
+    final prefs = await SharedPreferences.getInstance();
+    final lastMaintenanceMileage = prefs.getDouble(PrefsKeys.lastMaintenanceMileage) ?? 0.0;
+    
+    if (FormatUtils.isMaintenanceDue(_vehicle!.mileage, lastMaintenanceMileage)) {
       await _addNotificationIfNotExists(
         NotificationTypes.maintenance,
         NotificationMessages.maintenance,
       );
+      // Update last maintenance mileage
+      await prefs.setDouble(PrefsKeys.lastMaintenanceMileage, _vehicle!.mileage);
     }
   }
 

@@ -7,13 +7,27 @@ import '../utils/constants.dart';
 class DatabaseService {
   static final DatabaseService instance = DatabaseService._init();
   static Database? _database;
+  static bool _isInitializing = false;
 
   DatabaseService._init();
 
   Future<Database> get database async {
     if (_database != null) return _database!;
-    _database = await _initDB(DatabaseConfig.databaseName);
-    return _database!;
+    
+    // Wait if already initializing
+    while (_isInitializing) {
+      await Future.delayed(const Duration(milliseconds: 50));
+    }
+    
+    if (_database != null) return _database!;
+    
+    _isInitializing = true;
+    try {
+      _database = await _initDB(DatabaseConfig.databaseName);
+      return _database!;
+    } finally {
+      _isInitializing = false;
+    }
   }
 
   Future<Database> _initDB(String filePath) async {

@@ -23,10 +23,11 @@ class Vehicle {
 
   // Calculate autonomy (range) in KM
   // Formula: fuel autonomy + battery autonomy
-  // Battery: 100% = 345 KM
+  // Battery: 100% = 345 KM (defined in constants)
   // Fuel: (fuelLevel / fuelConsumption) * 100
   double get autonomy {
-    final batteryAutonomy = (batteryLevel / 100) * 345;
+    const batteryMaxRange = 345.0; // KM at 100% battery
+    final batteryAutonomy = (batteryLevel / 100) * batteryMaxRange;
     final fuelAutonomy = (fuelLevel / fuelConsumption) * 100;
     return batteryAutonomy + fuelAutonomy;
   }

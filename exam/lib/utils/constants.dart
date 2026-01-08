@@ -19,6 +19,7 @@ class NotificationMessages {
 class Thresholds {
   static const double lowAutonomy = 60.0; // KM
   static const int maintenanceMileageInterval = 10000; // KM
+  static const double batteryMaxRange = 345.0; // KM at 100% battery
 }
 
 // Colors
@@ -54,4 +55,22 @@ class DatabaseConfig {
 class PrefsKeys {
   static const String isConnected = 'is_connected';
   static const String vehicleId = 'vehicle_id';
+  static const String lastMaintenanceMileage = 'last_maintenance_mileage';
+}
+
+// Utility functions
+class FormatUtils {
+  // Format number with thousand separators
+  static String formatNumber(num number) {
+    final str = number.toStringAsFixed(0);
+    return str.replaceAllMapped(
+      RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+      (Match m) => '${m[1]},',
+    );
+  }
+  
+  // Check if maintenance is due
+  static bool isMaintenanceDue(double currentMileage, double lastMaintenanceMileage) {
+    return (currentMileage - lastMaintenanceMileage) >= Thresholds.maintenanceMileageInterval;
+  }
 }

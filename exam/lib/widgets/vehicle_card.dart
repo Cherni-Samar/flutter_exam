@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/vehicle.dart';
+import '../utils/constants.dart';
 
 class VehicleCard extends StatelessWidget {
   final Vehicle vehicle;
@@ -32,7 +33,7 @@ class VehicleCard extends StatelessWidget {
             
             // Mileage
             Text(
-              '${vehicle.mileage.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} KM',
+              '${FormatUtils.formatNumber(vehicle.mileage)} KM',
               style: const TextStyle(
                 fontSize: 18,
                 color: Colors.grey,
