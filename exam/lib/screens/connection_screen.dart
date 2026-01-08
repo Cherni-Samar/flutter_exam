@@ -87,7 +87,7 @@ class _ConnectionScreenState extends State<ConnectionScreen> {
               children: [
                 // App logo/icon
                 Icon(
-                  Icons.directions_car,
+                  Icons.cloud,
                   size: 100,
                   color: AppColors.primaryColor,
                 ),
@@ -107,7 +107,7 @@ class _ConnectionScreenState extends State<ConnectionScreen> {
                 
                 // Subtitle
                 Text(
-                  'Connectez-vous à votre véhicule',
+                  'Aucun véhicule associé pour le moment, connectez votre véhicule...',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 16,
